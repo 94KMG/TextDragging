@@ -27,10 +27,42 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TextDraggingTheme {
-
+                DraggableVerticalText()
             }
         }
     }
 }
 
+@Composable
+private fun DraggableHorizontalText() {
+    var offsetX by remember { mutableStateOf(0f) }
+    Text(
+        modifier = Modifier
+            .padding(96.dp)
+            .offset { IntOffset(offsetX.roundToInt(), 0) }
+            .draggable(
+                orientation = Orientation.Horizontal,
+                state = rememberDraggableState { delta ->
+                    offsetX += delta
+                }
+            ),
+        text = "Drag me!"
+    )
+}
 
+@Composable
+private fun DraggableVerticalText() {
+    var offsetY by remember { mutableStateOf(0f) }
+    Text(
+        modifier = Modifier
+            .padding(96.dp)
+            .offset { IntOffset(0, offsetY.roundToInt()) }
+            .draggable(
+                orientation = Orientation.Vertical,
+                state = rememberDraggableState { delta ->
+                    offsetY += delta
+                }
+            ),
+        text = "Drag me!"
+    )
+}
