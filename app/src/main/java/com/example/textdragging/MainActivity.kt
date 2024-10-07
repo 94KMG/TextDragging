@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +25,6 @@ import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.textdragging.ui.theme.TextDraggingTheme
 import kotlin.math.roundToInt
 
@@ -48,14 +47,17 @@ fun DraggableTextWithTemporaryLine() {
     var shouldDrawLine by remember { mutableStateOf(false) }
     var textSize by remember { mutableStateOf(IntSize.Zero) }
     var textPosition by remember { mutableStateOf(Offset.Zero) }
+    var undefinedText by remember { mutableStateOf("") }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(32.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(32.dp)
     ) {
-        Text(
-            text = "Drag me",
-            fontSize = 20.sp,
+        TextField(
+            value = undefinedText,
+            onValueChange = { undefinedText = it },
+//            fontSize = 20.sp,
             modifier = Modifier
                 .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
                 .pointerInput(Unit) {
